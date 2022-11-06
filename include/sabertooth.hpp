@@ -16,6 +16,23 @@ public:
 protected:
   ~SimplifiedSerialConfig() {}
 };
+
+class PacketizedSerialConfig
+{
+public:
+  std::vector<unsigned char> last_cmd;
+  std::vector<unsigned char> const& construct_command(unsigned char addr,
+                                                      unsigned char motor_index,
+                                                      int motor_spd);
+  std::vector<unsigned char> const& greet();
+  PacketizedSerialConfig();
+private:
+  unsigned char cmd_[2][2];
+  unsigned char const GREET_CODE = 0xAA;
+
+protected:
+  ~PacketizedSerialConfig() {}
+};
 class LinearInterpolation
 {
 public:
@@ -24,14 +41,17 @@ public:
 protected:
   ~LinearInterpolation() {}
 };
-class ReturnOutput {
-  public:
-    typedef std::vector<unsigned char> ReturnType;
-    ReturnType const& send(std::vector<unsigned char> const& payload) {
-      return payload;
-    }
-  protected:
-    ~ReturnOutput() {}
+class ReturnOutput
+{
+public:
+  typedef std::vector<unsigned char> ReturnType;
+  ReturnType const& send(std::vector<unsigned char> const& payload)
+  {
+    return payload;
+  }
+
+protected:
+  ~ReturnOutput() {}
 };
 class SerialOutput
 {
@@ -55,5 +75,6 @@ public:
                                                float motor_spd);
   typename OutputInterface::ReturnType command_send();
 };
-typedef Sabertooth<SimplifiedSerialConfig, LinearInterpolation, SerialOutput> BasicSabertooth;
+typedef Sabertooth<SimplifiedSerialConfig, LinearInterpolation, SerialOutput>
+  BasicSabertooth;
 }
