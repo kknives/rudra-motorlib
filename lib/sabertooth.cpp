@@ -21,5 +21,10 @@ LinearInterpolation::transform(float speed)
 {
   return std::clamp(int(speed * 127 + 128), 1, 255);
 }
-void SerialOutput::send() {}
+template<typename MotorConfig, typename Interpolation, typename OutputInterface>
+typename OutputInterface::ReturnType Sabertooth<MotorConfig,Interpolation,OutputInterface>::command(int motor_index, float motor_spd) {
+  int interm_rep_spd = Interpolation::transform(motor_spd);
+  auto cmd = MotorConfig::construct_command(motor_index, interm_rep_spd);
+  return OutputInterface::send(cmd);
+}
 }
