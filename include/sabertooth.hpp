@@ -50,4 +50,5 @@ public:
   typename OutputInterface::ReturnType command(int motor_index, float motor_spd);
   void command_send();
 };
+typedef Sabertooth<SimplifiedSerialConfig, LinearInterpolation, SerialOutput> BasicSabertooth;
 }
