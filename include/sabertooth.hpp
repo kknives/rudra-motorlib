@@ -21,10 +21,20 @@ public:
 protected:
   ~LinearInterpolation() {}
 };
+class ReturnOutput {
+  public:
+    typedef std::vector<unsigned char> ReturnType;
+    ReturnType const& send(std::vector<unsigned char> const& payload) {
+      return payload;
+    }
+  protected:
+    ~ReturnOutput() {}
+};
 class SerialOutput
 {
 public:
-  void send(std::vector<unsigned char> const& payload);
+  typedef void ReturnType;
+  ReturnType send(std::vector<unsigned char> const& payload);
 
 protected:
   ~SerialOutput() {}
@@ -36,8 +46,8 @@ class Sabertooth
   , public OutputInterface
 {
 public:
-  Sabertooth();
-  void command();
+  Sabertooth() {};
+  typename OutputInterface::ReturnType command(int motor_index, float motor_spd);
   void command_send();
 };
 }
