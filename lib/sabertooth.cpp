@@ -4,6 +4,11 @@
 #include <stdexcept>
 
 namespace rml {
+
+inline constexpr unsigned char operator "" _uchar( unsigned long long arg ) noexcept
+{
+    return static_cast< unsigned char >( arg );
+}
 std::vector<unsigned char> const&
 SimplifiedSerialConfig::construct_command(unsigned char,
                                           unsigned char motor_index,
