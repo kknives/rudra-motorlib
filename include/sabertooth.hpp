@@ -6,9 +6,12 @@ class SimplifiedSerialConfig
 {
 public:
   std::vector<unsigned char> last_cmd;
-  std::vector<unsigned char> const & construct_command(unsigned int motor_index,
-                                              int motor_spd);
-  SimplifiedSerialConfig() : last_cmd(2) {}
+  std::vector<unsigned char> const& construct_command(unsigned char addr,
+                                                      unsigned char motor_index,
+                                                      int motor_spd);
+  SimplifiedSerialConfig()
+    : last_cmd(2)
+  {}
 
 protected:
   ~SimplifiedSerialConfig() {}
@@ -46,9 +49,11 @@ class Sabertooth
   , public OutputInterface
 {
 public:
-  Sabertooth() {};
-  typename OutputInterface::ReturnType command(int motor_index, float motor_spd);
-  void command_send();
+  Sabertooth(){};
+  typename OutputInterface::ReturnType command(unsigned char addr,
+                                               unsigned char motor_index,
+                                               float motor_spd);
+  typename OutputInterface::ReturnType command_send();
 };
 typedef Sabertooth<SimplifiedSerialConfig, LinearInterpolation, SerialOutput> BasicSabertooth;
 }
