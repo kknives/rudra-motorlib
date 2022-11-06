@@ -14,7 +14,7 @@ endif()
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 # Include our own headers
 include_directories(include)
-add_library(sabertooth lib/sabertooth.cpp)
+add_library(rml lib/sabertooth.cpp lib/smartelex.cpp)
 
 # add_subdirectory(dist/rapidcheck)
 # add_library(my_library src/my_library.cpp)
