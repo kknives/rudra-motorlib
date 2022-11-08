@@ -17,15 +17,4 @@ SerialModeConfig::SerialModeConfig()
   : last_cmd(5)
 {}
 
-template<typename MotorConfig, typename Interpolation, typename OutputInterface>
-typename OutputInterface::ReturnType
-SmartElex<MotorConfig, Interpolation, OutputInterface>::command(
-  float motor1_spd,
-  float motor2_spd)
-{
-  int interm_spd1 = Interpolation::transform(motor1_spd);
-  int interm_spd2 = Interpolation::transform(motor2_spd);
-  auto cmd = MotorConfig::construct_command(interm_spd1, interm_spd2);
-  return OutputInterface::send(cmd);
-}
 }

@@ -20,7 +20,16 @@ class SmartElex
 {
 public:
   SmartElex(){};
+  typename OutputInterface::ReturnType command([[maybe_unused]]unsigned char addr,
+                                               unsigned char motor_index,
+                                               float motor_spd);
   typename OutputInterface::ReturnType command(float motor1_spd,
-                                               float motor2_spd);
+                                               float motor2_spd)
+  {
+  int interm_spd1 = Interpolation::transform(motor1_spd);
+  int interm_spd2 = Interpolation::transform(motor2_spd);
+  auto cmd = MotorConfig::construct_command(interm_spd1, interm_spd2);
+  return OutputInterface::send(cmd);
+  }
 };
 }
