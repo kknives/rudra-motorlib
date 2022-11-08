@@ -12,10 +12,20 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 endif()
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+find_package(Boost REQUIRED system)
+IF(Boost_FOUND)
+  INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
+  LINK_DIRECTORIES(${Boost_LIBRARY_DIRS})
+ENDIF(Boost_FOUND)
 # Include our own headers
 include_directories(include)
-add_library(rml SHARED lib/smartelex.cpp)
-
+add_library(rml SHARED lib/smartelex.cpp lib/serial.cpp)
+target_link_libraries(
+  rml
+${Boost_SYSTEM_LIBRARY}
+${Boost_ASIO_LIBRARY}
+)
 include(FetchContent)
 FetchContent_Declare(
   googletest
@@ -26,17 +36,26 @@ FetchContent_MakeAvailable(googletest)
 enable_testing()
 
 add_executable(
-  test_sabertooth
-  tests/test_sabertooth.cpp
+  hw_tests
+  tests/hw_test_smartelex.cpp
 )
 target_link_libraries(
-  test_sabertooth
+  hw_tests
+  rml
+)
+add_executable(
+  input_tests
+  tests/test_sabertooth.cpp
+  # tests/test_smartelex.cpp
+)
+target_link_libraries(
+  input_tests
   rml
   GTest::gtest_main
 )
 
 include(GoogleTest)
-gtest_discover_tests(test_sabertooth)
+gtest_discover_tests(input_tests)
 # find_package(Catch2 3 REQUIRED)
 # add_executable(tests tests/sabertooth.cpp)
 # target_link_libraries(tests PRIVATE Catch2::Catch2WithMain)
