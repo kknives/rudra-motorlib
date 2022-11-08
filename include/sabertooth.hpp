@@ -1,4 +1,5 @@
 #pragma once
+#include <boost/asio.hpp>
 #include <algorithm>
 #include <numeric>
 #include <stdexcept>
@@ -143,10 +144,15 @@ class SerialOutput
 {
 public:
   typedef void ReturnType;
+  SerialOutput();
+  void open(std::string const& port_d);
   ReturnType send(std::vector<unsigned char> const& payload);
 
 protected:
   ~SerialOutput() {}
+  boost::asio::io_service io_;
+  boost::asio::serial_port port_if_;
+  std::string port_d_;
 };
 /// @brief Operate on a Sabertooth driver.
 ///
