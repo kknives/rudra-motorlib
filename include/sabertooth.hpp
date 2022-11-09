@@ -8,8 +8,8 @@
 namespace rml {
 /// @brief The 1-byte command interface for Sabertooth drivers.
 ///
-/// This MotorConfig manages a single Sabertooth driver, connected to the host
-/// directly. As opposed to the PacketizedSerialConfig which can command upto 8
+/// This MotorConfig manages a single Sabertooth or BasicMicro driver, connected to the host
+/// directly. As opposed to the PacketizedConfigs which can command upto 8
 /// drivers, all sharing the same serial bus.
 class SimplifiedSerialConfig
 {
@@ -51,7 +51,7 @@ protected:
 /// This MotorConfig can be used to command multiple (upto 8 according to the
 /// datasheet) drivers listening on the same serial bus. Each driver must be
 /// configured with a unique address to command it.
-class PacketizedSerialConfig
+class SabertoothPacketizedConfig
 {
 public:
   /// The last command constructed.
@@ -86,7 +86,7 @@ public:
     last_cmd[3] = GREET_CODE;
     return last_cmd;
   }
-  PacketizedSerialConfig()
+  SabertoothPacketizedConfig()
     : last_cmd(4)
   {
 
@@ -101,7 +101,7 @@ private:
   unsigned char const GREET_CODE = 0xAA;
 
 protected:
-  ~PacketizedSerialConfig() {}
+  ~SabertoothPacketizedConfig() {}
 };
 /// @brief A linear map from [-1,1] motor speeds.
 ///
