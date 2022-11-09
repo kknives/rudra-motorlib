@@ -10,7 +10,7 @@ SerialModeConfig::construct_command(int motor1_spd, int motor2_spd)
                 ((motor2_spd != 128) << 1) | (motor2_spd > 128);
   last_cmd[2] = std::abs(motor1_spd - 128);
   last_cmd[3] = std::abs(motor2_spd - 128);
-  last_cmd[4] = 0xFF;
+  last_cmd[4] = 0x23;
   return last_cmd;
 }
 SerialModeConfig::SerialModeConfig()
