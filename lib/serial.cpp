@@ -10,11 +10,11 @@ SerialOutput::SerialOutput()
   , port_d_{}
 {}
 void
-SerialOutput::open(std::string const& port_d)
+SerialOutput::open(std::string const& port_d, unsigned int baudrate)
 {
   port_d_ = port_d;
   port_if_.open(port_d);
-  port_if_.set_option(boost::asio::serial_port_base::baud_rate(9600));
+  port_if_.set_option(boost::asio::serial_port_base::baud_rate(baudrate));
 }
 SerialOutput::ReturnType
 SerialOutput::send(std::vector<unsigned char> const& payload)

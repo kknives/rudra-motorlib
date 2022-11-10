@@ -145,7 +145,7 @@ class SerialOutput
 public:
   typedef void ReturnType;
   SerialOutput();
-  void open(std::string const& port_d);
+  void open(std::string const& port_d, unsigned int baudrate);
   ReturnType send(std::vector<unsigned char> const& payload);
 
 protected:
