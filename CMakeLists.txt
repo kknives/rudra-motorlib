@@ -46,7 +46,7 @@ target_link_libraries(
 add_executable(
   input_tests
   tests/test_sabertooth.cpp
-  # tests/test_smartelex.cpp
+  tests/test_smartelex.cpp
 )
 target_link_libraries(
   input_tests
