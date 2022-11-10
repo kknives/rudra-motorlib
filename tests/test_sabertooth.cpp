@@ -57,7 +57,7 @@ TEST(SabertoothTest, PositiveCorrelation)
     EXPECT_GT(vel[1], 191);
   }
 }
-TEST(SabertoothTest, IncrementalCorrelation)
+TEST(LinearInterpolationTest, IncrementalCorrelation)
 {
   auto s = rml::Sabertooth<rml::SimplifiedSerialConfig,
                            rml::LinearInterpolation,
@@ -70,7 +70,7 @@ TEST(SabertoothTest, IncrementalCorrelation)
     vel = s.command(0, 1, (float)i / 100);
   }
 }
-TEST(SabertoothTest, DecrementalCorrelation)
+TEST(LinearInterpolationTest, DecrementalCorrelation)
 {
   auto s = rml::Sabertooth<rml::SimplifiedSerialConfig,
                            rml::LinearInterpolation,
