@@ -14,6 +14,7 @@ SerialOutput::open(std::string const& port_d)
 {
   port_d_ = port_d;
   port_if_.open(port_d);
+  port_if_.set_option(boost::asio::serial_port_base::baud_rate(9600));
 }
 SerialOutput::ReturnType
 SerialOutput::send(std::vector<unsigned char> const& payload)
